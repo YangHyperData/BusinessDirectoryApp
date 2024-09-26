@@ -1,50 +1,17 @@
-# Welcome to your Expo app 👋
+![image](https://github.com/user-attachments/assets/2d7b5381-0b0c-4416-96cb-617a3ba5c1fa)
+![image](https://github.com/user-attachments/assets/2115516b-eea4-425b-84f1-f73c5fe6566e)
+![image](https://github.com/user-attachments/assets/c9d5bfb6-2511-470b-a862-e9e2c6d18b75)
+![image](https://github.com/user-attachments/assets/66d8ea84-3cab-4689-92af-d09c578b32f8)
+![image](https://github.com/user-attachments/assets/72548be7-6359-4d99-85a6-8b8586a15f3c)
+![image](https://github.com/user-attachments/assets/e76371f7-d595-4dbc-b5e1-e0443f9b5c95)
+![image](https://github.com/user-attachments/assets/f88d0290-ad68-4e67-8b93-1f6020b2aebc)
+![image](https://github.com/user-attachments/assets/23879e0c-faf5-42c3-b25c-c0eded0d9ab3)
+![image](https://github.com/user-attachments/assets/33e26aaa-5015-4612-86e0-9f7778c48985)
+![image](https://github.com/user-attachments/assets/e1ec7b95-ffe6-4dce-a87c-9818763d33f5)
+![image](https://github.com/user-attachments/assets/5aee04b4-9a7a-4e4a-b551-47e1592ae848)
+![image](https://github.com/user-attachments/assets/b9d29822-943d-44c7-b6fd-b2b8f10b0c72)
+![image](https://github.com/user-attachments/assets/477f0e46-64ff-4092-8e44-48657cf45182)
+![image](https://github.com/user-attachments/assets/4278f5b6-9bcc-4abd-8821-8ce36cd161e1)
+![image](https://github.com/user-attachments/assets/7d2d0a07-7aa8-48c2-95dc-cba7eb73c450)
+![image](https://github.com/user-attachments/assets/5da5273f-1fd9-46c0-b918-9a745f2065a9)
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
-
-## Get started
-
-1. Install dependencies
-
-   ```bash
-   npm install
-   ```
-
-2. Start the app
-
-   ```bash
-    npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
