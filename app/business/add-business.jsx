@@ -13,8 +13,6 @@ export default function AddBusiness() {
     const navigation = useNavigation();
     const [image, setImage] = useState(null);
     const [categoryList, setCategoryList] = useState([]);
-
-
     const [name, setName] = useState();
     const [address, setAddress] = useState();
     const [contact, setContact] = useState();
@@ -23,6 +21,7 @@ export default function AddBusiness() {
     const [category, setCategory] = useState();
     const user = auth.currentUser;
     const fullName = user?.email;
+    const email = user.email;
     const [loading, setLoading] = useState(false)
     useEffect(() => {
         navigation.setOptions({
@@ -48,7 +47,7 @@ export default function AddBusiness() {
         const snapShot = await getDocs(q);
 
         snapShot.forEach((doc) => {
-            console.log(doc.data());
+            // console.log(doc.data());
             setCategoryList(prev => [...prev, {
                 label: (doc.data()).name,
                 value: (doc.data()).name
@@ -65,14 +64,15 @@ export default function AddBusiness() {
         const imageRef = ref(storage, 'business-app/' + fileName);
 
         uploadBytes(imageRef, blob).then((snapshot) => {
-            console.log("File uploaded...")
+            // console.log("File uploaded...")
         }).then(resp => {
             getDownloadURL(imageRef).then(async (downloadURL) => {
-                console.log(downloadURL);
+                // console.log(downloadURL);
                 saveBusinessDetail(downloadURL);
             })
         })
         setLoading(false);
+        navigation.navigate('home')
     }
 
 
@@ -85,7 +85,8 @@ export default function AddBusiness() {
             website: website,
             category: category,
             username: fullName,
-            imageURL: imageURL
+            imageURL: imageURL,
+            email: email,
         })
         setLoading(false);
         ToastAndroid.show('New business added...', ToastAndroid.LONG)

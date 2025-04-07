@@ -5,14 +5,14 @@ import { Colors } from './../../constants/Colors'
 import Ionicons from '@expo/vector-icons/Ionicons';
 export default function Header() {
     const user = auth.currentUser;
-    const fullName = user?.email ;
+    const fullName = user?.email;
     return (
         <View style={{
             padding: 20,
             paddingTop: 28,
             backgroundColor: Colors.primary,
-            borderBottomLeftRadius:20,
-            borderBottomRightRadius:20
+            borderBottomLeftRadius: 20,
+            borderBottomRightRadius: 20
         }}>
             <View style={{
                 display: 'flex',
@@ -41,22 +41,22 @@ export default function Header() {
             </View>
             {/* Search Bar */}
             <View style={{
-                display:'flex',
-                flexDirection:'row',
-                gap:10,
-                alignItems:'center',
-                backgroundColor:Colors.white,
-                padding:7,
-                marginTop:13,
-                borderRadius:8
+                display: 'flex',
+                flexDirection: 'row',
+                gap: 10,
+                alignItems: 'center',
+                backgroundColor: Colors.white,
+                padding: 7,
+                marginTop: 13,
+                borderRadius: 8
             }}>
                 <Ionicons name="search" size={24} color={Colors.primary} />
                 <TextInput placeholder='Search...'
-                style={{
-                    fontSize:16,
-                    fontFamily:'outfit',
-                    alignItems:'center'
-                }}/>
+                    style={{
+                        fontSize: 16,
+                        fontFamily: 'outfit',
+                        alignItems: 'center'
+                    }} />
             </View>
         </View>
     )

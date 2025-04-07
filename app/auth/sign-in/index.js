@@ -5,6 +5,7 @@ import { Colors } from './../../../constants/Colors'
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from './../../../configs/FireBaseConfig'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useState } from 'react';
 export default function SignIn() {
     const navigation = useNavigation();
@@ -18,7 +19,7 @@ export default function SignIn() {
         })
     }, []);
 
-    const OnSignIn = () => {
+    const OnSignIn = async () => {
 
         if (!email && !password) {
             ToastAndroid.show('Please Enter Email & Password', ToastAndroid.LONG)
@@ -29,7 +30,6 @@ export default function SignIn() {
             .then((userCredential) => {
                 // Signed in 
                 const user = userCredential.user;
-                console.log(user);
                 if (user) {
                     router.replace('/home'); // Navigate to home page
                 } else {

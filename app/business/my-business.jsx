@@ -9,12 +9,12 @@ export default function MyBusiness() {
     const user = auth.currentUser;
     const fullName = user?.email;
     const [businessList, setBusinessList] = useState([]);
-    const [loading,setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
     const navigation = useNavigation();
     useEffect(() => {
         navigation.setOptions({
-            headerShown:true,
-            headerTitle:'My Business'
+            headerShown: true,
+            headerTitle: 'My Business'
         })
         user && GetUserBusiness();
     }, [user])
@@ -49,9 +49,9 @@ export default function MyBusiness() {
                 refreshing={loading}
                 renderItem={({ item, index }) => (
                     <BusinessListCard business={item}
-                key={index}    
+                        key={index}
                     />
-            )}
+                )}
             />
         </View>
     )
