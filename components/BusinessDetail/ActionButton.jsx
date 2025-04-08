@@ -1,7 +1,9 @@
 import { View, Text, FlatList, Image, TouchableOpacity, Linking, Share } from 'react-native';
 import React from 'react';
+import { useRouter } from 'expo-router';
 
-export default function ActionButton({ business }) {
+export default function ActionButton({ business, router }) {
+    
 
     const ActionButtonMenu = [
         {
@@ -28,12 +30,29 @@ export default function ActionButton({ business }) {
             icon: require('./../../assets/images/share.png'),
             url: business?.website
         },
+        {
+            id: 5,
+            name: "Chat",
+            icon: require('./../../assets/images/chat.png'),
+            url: business?.website
+        },
     ];
 
     const OnPressHandle = (item) => {
         if (item.name === 'Share') {
             Share.share({
                 message: `${business?.name}\nAddress: ${business?.address}\nFind more details on the Business Directory App by YangStone!`
+            });
+            return;
+        }
+        if (item.name === 'Chat') {
+            router.push({
+                pathname: '/chat/BoxChat',
+                params: {
+                    id: business?.id,
+                    name: business?.name,
+                    image: business?.imageURL,
+                },
             });
             return;
         }
