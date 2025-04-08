@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TextInput, FlatList, SafeAreaView, TouchableOpacity, Image } from 'react-native';
 
-import firestore from '@react-native-firebase/firestore';
-import storage from '@react-native-firebase/storage';
-import ItemChat from './Component/ItemChat';
-import { auth } from '../../configs/FireBaseConfig';
+// import firestore from '@react-native-firebase/firestore';
+// import storage from '@react-native-firebase/storage';
+import ItemChat from '../chat/Component/ItemChat';
+// import { auth } from '../../configs/FireBaseConfig';
 const sampleData = [
     {
         id: '1',
