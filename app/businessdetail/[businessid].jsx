@@ -8,6 +8,7 @@ import Intro from '../../components/BusinessDetail/Intro';
 import ActionButton from '../../components/BusinessDetail/ActionButton';
 import About from '../../components/BusinessDetail/About';
 import Reviews from '../../components/BusinessDetail/Reviews';
+import { auth } from './../../configs/FireBaseConfig'
 export default function BusinessDetail() {
     const router = useRouter();
 

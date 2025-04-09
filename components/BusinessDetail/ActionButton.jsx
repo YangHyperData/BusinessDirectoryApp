@@ -1,9 +1,25 @@
 import { View, Text, FlatList, Image, TouchableOpacity, Linking, Share } from 'react-native';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRouter } from 'expo-router';
-
+import BoxChat from '../../app/chat/BoxChat';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function ActionButton({ business, router }) {
-    
+
+    useEffect(() => {
+        if (business) {
+            saveData();
+        }
+    }, [business]);
+
+    const saveData = async () => {
+        try {
+            const jsonValue = JSON.stringify(business.email);
+            await AsyncStorage.setItem('data', jsonValue);
+        } catch (e) {
+            console.log("Lỗi khi lưu dữ liệu: ", e);
+        }
+    };
+
 
     const ActionButtonMenu = [
         {
@@ -34,7 +50,8 @@ export default function ActionButton({ business, router }) {
             id: 5,
             name: "Chat",
             icon: require('./../../assets/images/chat.png'),
-            url: business?.website
+            url: business?.website,
+            data: business,
         },
     ];
 
@@ -46,6 +63,7 @@ export default function ActionButton({ business, router }) {
             return;
         }
         if (item.name === 'Chat') {
+
             router.push({
                 pathname: '/chat/BoxChat',
                 params: {

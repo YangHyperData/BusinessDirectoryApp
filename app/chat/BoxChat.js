@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     View,
     FlatList,
@@ -13,14 +13,51 @@ import {
 } from 'react-native';
 import Sender from './Component/Sender';
 import Receiver from './Component/Receiver';
+import { auth } from '../../configs/FireBaseConfig';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const BoxChat = () => {
+    const [emailBusi, setEmailBusi] = useState('');
+    const [inputText, setInputText] = useState('');
     const [messages, setMessages] = useState([
         { id: '1', type: 'receiver', text: 'Xin chào!' },
         { id: '2', type: 'sender', text: 'Chào bạn! Bạn khỏe không?' },
         { id: '3', type: 'receiver', text: 'Mình khỏe, cảm ơn. Còn bạn?' },
         { id: '4', type: 'sender', text: 'Cũng ổn luôn!' },
     ]);
-    const [inputText, setInputText] = useState('');
+
+    const user = auth.currentUser;
+
+    useEffect(() => {
+        const saveData = async () => {
+            try {
+                const email = await AsyncStorage.getItem('data');
+                if (email) {
+                    setEmailBusi(email);
+                    console.log("user pussyness", email);
+                }
+            } catch (error) {
+                console.error('Lỗi khi lấy dữ liệu từ AsyncStorage:', error);
+            }
+        };
+
+        saveData();
+
+        if (user) {
+            console.log("user của chính mình", user.email);
+        }
+    }, []);
+
+
+    const chatId = () => {
+        let str = emailBusi
+        setEmailBusi(str.replace(/"/g, ''))
+        return (
+            user.email < emailBusi
+                ? `${user.email}_${emailBusi}`
+                : `${emailBusi}_${user.email}`)
+    }
+
 
     const handleSend = () => {
         if (inputText.trim() === '') return;
@@ -36,16 +73,15 @@ const BoxChat = () => {
     };
 
     const renderItem = ({ item }) => {
-        if (item.type === 'sender') {
-            return <Sender text={item.text} />;
-        } else {
-            return <Receiver text={item.text} />;
-        }
+        return item.type === 'sender' ? (
+            <Sender text={item.text} />
+        ) : (
+            <Receiver text={item.text} />
+        );
     };
 
     return (
         <SafeAreaView style={styles.container}>
-            {/* Header */}
             <View style={styles.header}>
                 <Image
                     source={{ uri: 'https://i.pravatar.cc/150?img=12' }}
@@ -54,7 +90,6 @@ const BoxChat = () => {
                 <Text style={styles.name}>Nguyễn Văn A</Text>
             </View>
 
-            {/* Chat list */}
             <FlatList
                 data={messages}
                 renderItem={renderItem}
@@ -62,7 +97,6 @@ const BoxChat = () => {
                 contentContainerStyle={styles.messageContainer}
             />
 
-            {/* Input + Send */}
             <KeyboardAvoidingView
                 behavior={Platform.OS === 'ios' ? 'padding' : undefined}
                 keyboardVerticalOffset={80}
