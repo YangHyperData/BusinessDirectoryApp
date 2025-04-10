@@ -9,7 +9,7 @@ import { auth } from '../../configs/FireBaseConfig';
 export default function home() {
 
   const user = auth.currentUser;
-  console.log(user, 123)
+  // console.log(user, 123)
   return (
     <ScrollView>
 

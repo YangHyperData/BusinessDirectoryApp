@@ -1,79 +1,82 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TextInput, FlatList, SafeAreaView, TouchableOpacity, Image } from 'react-native';
+import { View, Text, StyleSheet, FlatList } from 'react-native';
+import { db } from '../../configs/FireBaseConfig'; // Make sure the path is correct for your Firebase config
+import { collection, query, onSnapshot } from 'firebase/firestore';
 
-// import firestore from '@react-native-firebase/firestore';
-// import storage from '@react-native-firebase/storage';
-import ItemChat from '../chat/Component/ItemChat';
-// import { auth } from '../../configs/FireBaseConfig';
-const sampleData = [
-    {
-        id: '1',
-        avatar: 'https://i.pravatar.cc/150?img=3',
-        name: 'Huỳnh Tuấn Anh',
-    },
-    {
-        id: '2',
-        avatar: 'https://i.pravatar.cc/150?img=5',
-        name: 'Lê Minh Hoàng',
-    },
-    {
-        id: '3',
-        avatar: 'https://i.pravatar.cc/150?img=6',
-        name: 'Nguyễn Thu Hà',
-    },
-];
-const inbox = ({ navigation }) => {
-    const [chatList, setChatList] = useState([]);
+// Function to fetch documents in real-time
+const fetchCollectionDocuments = (collectionName, callback) => {
+    const q = query(collection(db, collectionName));
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+        const documents = [];
+        querySnapshot.forEach((doc) => {
+            documents.push({ id: doc.id, ...doc.data() });
+        });
+        callback(documents);
+    });
+
+    return unsubscribe; // To stop listening, call this
+};
+
+const inbox = () => {
+    const [documents, setDocuments] = useState([]);
 
     useEffect(() => {
-        // Bạn có thể fetch từ Firestore tại đây
-        setChatList(sampleData);
+        const unsubscribe = fetchCollectionDocuments('chats', (data) => {
+            console.log(data)
+            setDocuments(data);
+        });
+
+        // Cleanup subscription on component unmount
+        return () => unsubscribe();
     }, []);
 
     const renderItem = ({ item }) => (
-        <ItemChat
-            avatar={item.avatar}
-            name={item.name}
-            navigation={navigation}
-        />
+        <View style={styles.item}>
+            <Text style={styles.title}>{item.name}</Text>
+            <Text>{JSON.stringify(item)}</Text>
+        </View>
     );
 
     return (
-        <SafeAreaView style={styles.container}>
-            <View
-                style={{
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                }}
-            >
-                <Text
-                    style={{
-                        fontWeight: 'bold',
-                        fontSize: 20
-                    }}
-                >
-                    Box chat
-                </Text>
-            </View>
+        <View style={styles.container}>
+            <Text style={styles.header}>Firestore Collection Data</Text>
             <FlatList
-                data={chatList}
+                data={documents}
                 keyExtractor={(item) => item.id}
                 renderItem={renderItem}
                 contentContainerStyle={styles.listContent}
                 showsVerticalScrollIndicator={false}
             />
-        </SafeAreaView>
+        </View>
     );
 };
-
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#f5f5f5',
+        backgroundColor: '#fff',
+        padding: 16,
+    },
+    header: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginBottom: 16,
+        textAlign: 'center',
     },
     listContent: {
         paddingVertical: 10,
     },
+    item: {
+        backgroundColor: '#f9f9f9',
+        padding: 10,
+        marginBottom: 10,
+        borderRadius: 5,
+        elevation: 2,
+    },
+    title: {
+        fontSize: 18,
+        fontWeight: 'bold',
+    },
 });
+
 export default inbox;

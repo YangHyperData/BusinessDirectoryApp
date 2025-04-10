@@ -4,19 +4,19 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { Colors } from './../../constants/Colors'
 import Category from '../../components/Home/Category';
 import { collection, getDocs, query, where } from 'firebase/firestore';
-import {db} from './../../configs/FireBaseConfig'
+import { db } from './../../configs/FireBaseConfig'
 import ExploreBusiness from '../../components/Explore/ExploreBusiness';
 export default function explore() {
 
-  const [businessList,setBusinessList] = useState([]);
+  const [businessList, setBusinessList] = useState([]);
 
   const GetBusinessByCategory = async (category) => {
     setBusinessList([]);
     const q = query(collection(db, 'BusinessList'), where('category', '==', category));
     const querySnapShot = await getDocs(q);
     querySnapShot.forEach((doc) => {
-      console.log(doc.data());
-      setBusinessList(prev => [...prev,{id:doc.id,...doc.data()}])
+      // console.log(doc.data());
+      setBusinessList(prev => [...prev, { id: doc.id, ...doc.data() }])
     })
   }
 
@@ -25,7 +25,7 @@ export default function explore() {
       <Text style={{
         fontSize: 30,
         fontFamily: 'outfit-bold',
-        padding:10
+        padding: 10
       }}>Explore More</Text>
 
       {/* Search Bar */}
@@ -49,12 +49,12 @@ export default function explore() {
       </View>
       {/* Category */}
       <Category
-        
+
         explore={true}
         onCategorySelect={(category) => GetBusinessByCategory(category)}
       />
       {/* Business List */}
-      <ExploreBusiness businessList={businessList}/>
+      <ExploreBusiness businessList={businessList} />
 
 
     </View>

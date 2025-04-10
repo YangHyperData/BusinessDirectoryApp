@@ -5,7 +5,7 @@ import { collection, getDocs, query } from 'firebase/firestore'
 import { db } from '../../configs/FireBaseConfig'
 import CategoryItem from './CategoryItem'
 import { useRouter } from 'expo-router'
-export default function Category({ explore = false,onCategorySelect }) {
+export default function Category({ explore = false, onCategorySelect }) {
 
     const [categoryList, setCategoryList] = useState([]);
     const router = useRouter();
@@ -19,7 +19,7 @@ export default function Category({ explore = false,onCategorySelect }) {
         const querySnapShot = await getDocs(q);
 
         querySnapShot.forEach((doc) => {
-            console.log(doc.data());
+            // console.log(doc.data());
             setCategoryList(prev => [...prev, doc.data()])
         })
     }
@@ -61,7 +61,7 @@ export default function Category({ explore = false,onCategorySelect }) {
                 horizontal={true}
                 style={{ marginLeft: 20 }}
                 showsHorizontalScrollIndicator={false}
-                
+
                 renderItem={({ item, index }) => (
                     <CategoryItem
                         category={item}
@@ -69,7 +69,7 @@ export default function Category({ explore = false,onCategorySelect }) {
                         OnCategoryPress={(category) => onCategoryPressHandler(item)}
                     />
                 )}
-                
+
             />
         </View>
     )
