@@ -62,8 +62,8 @@ const BoxChat = () => {
 
                 // Create chat ID using only the usernames
                 const id = currentUserName < businessUserName
-                    ? `${currentUserName}_${businessUserName}`
-                    : `${businessUserName}_${currentUserName}`;
+                    ? `${currentUserName}${businessUserName}`
+                    : `${businessUserName}${currentUserName}`;
                 setChatId(id);
                 setChatId(id);
 

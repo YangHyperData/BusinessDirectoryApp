@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList } from 'react-native';
-import { db } from '../../configs/FireBaseConfig'; // Make sure the path is correct for your Firebase config
 import { collection, query, onSnapshot } from 'firebase/firestore';
+import { auth, db } from '../../configs/FireBaseConfig';
+
 
 // Function to fetch documents in real-time
 const fetchCollectionDocuments = (collectionName, callback) => {
@@ -11,6 +12,7 @@ const fetchCollectionDocuments = (collectionName, callback) => {
         querySnapshot.forEach((doc) => {
             documents.push({ id: doc.id, ...doc.data() });
         });
+
         callback(documents);
     });
 
@@ -19,11 +21,14 @@ const fetchCollectionDocuments = (collectionName, callback) => {
 
 const inbox = () => {
     const [documents, setDocuments] = useState([]);
+    const user = auth.currentUser;
+    const email = user.email;
 
     useEffect(() => {
-        const unsubscribe = fetchCollectionDocuments('chats', (data) => {
-            console.log(data)
-            setDocuments(data);
+        const unsubscribe = fetchCollectionDocuments('Chats', (data) => {
+            // Lọc các documents có chứa email trong tên
+            const filteredData = data.filter(doc => doc.id.toLowerCase().includes(email.split('@')[0].toLowerCase()));
+            setDocuments(filteredData);
         });
 
         // Cleanup subscription on component unmount
@@ -32,14 +37,14 @@ const inbox = () => {
 
     const renderItem = ({ item }) => (
         <View style={styles.item}>
-            <Text style={styles.title}>{item.name}</Text>
+            <Text style={styles.title}>{item.id}</Text>
             <Text>{JSON.stringify(item)}</Text>
         </View>
     );
 
     return (
         <View style={styles.container}>
-            <Text style={styles.header}>Firestore Collection Data</Text>
+            <Text style={styles.header}>Chats</Text>
             <FlatList
                 data={documents}
                 keyExtractor={(item) => item.id}
