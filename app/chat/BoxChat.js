@@ -15,7 +15,7 @@ import {
 import Sender from './Component/Sender';
 import Receiver from './Component/Receiver';
 import { auth, db } from '../../configs/FireBaseConfig';
-import { collection, addDoc, query, onSnapshot, orderBy } from 'firebase/firestore';
+import { collection, addDoc, query, onSnapshot, orderBy, doc, setDoc } from 'firebase/firestore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const BoxChat = () => {
@@ -29,6 +29,18 @@ const BoxChat = () => {
 
     const sanitizeEmail = (email) => {
         return email.replace(/[.#$[\]]/g, '_');
+    };
+
+    // Trước khi truy cập messages collection, tạo document cha nếu chưa tồn tại
+    const createChatDocument = async (chatId) => {
+        const chatDocRef = doc(db, 'Chats', chatId);
+
+        // Tạo document cha với một số thông tin cơ bản
+        await setDoc(chatDocRef, {
+            participants: [user.email, emailBusi],
+            createdAt: new Date(),
+            lastMessage: null
+        }, { merge: true }); // merge: true để không ghi đè nếu document đã tồn tại
     };
 
     useEffect(() => {
@@ -65,8 +77,11 @@ const BoxChat = () => {
                     ? `${currentUserName}${businessUserName}`
                     : `${businessUserName}${currentUserName}`;
                 setChatId(id);
-                setChatId(id);
 
+                // Tạo document cha trước
+                await createChatDocument(id);
+
+                // Sau đó mới truy cập subcollection messages
                 const messagesRef = collection(db, `Chats/${id}/messages`);
                 const q = query(messagesRef, orderBy('timestamp'));
 
@@ -79,9 +94,8 @@ const BoxChat = () => {
                 return () => {
                     unsubscribe();
                 };
-
             } catch (error) {
-                console.error('Error initializing chat:', error);
+                console.error('Error in chat setup:', error);
                 setLoading(false);
             }
         };
